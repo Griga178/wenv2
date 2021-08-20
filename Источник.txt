@@ -1,0 +1,12 @@
+Создание
+https://developer.mozilla.org/ru/docs/Learn/Server-side/Django/skeleton_website
+- неудача
+
+https://www.digitalocean.com/community/tutorials/how-to-make-a-web-application-using-flask-in-python-3-ru
+
+запуск сервера: 
+app.py
+
+http://127.0.0.1:5000/
+
+http://192.168.1.81:5000/
