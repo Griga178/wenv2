@@ -7,13 +7,13 @@ def get_db_connection():
 
 def get_post(): # все строки из таблицы
     conn = get_db_connection()
-    post = conn.execute(f'SELECT * FROM posts').fetchall()
+    post = conn.execute(f'SELECT * FROM answers').fetchall()
     conn.close()
     if post is None:
         abort(404)
     return post
 
-ins = "INSERT INTO posts (title, content) VALUES ('second Post', 'Content for the 2 post')"
+ins = "INSERT INTO answers (title, content) VALUES ('second Post', 'Content for the 2 post')"
 
 def ins_db(insa): # вставка в бд
     conn = sqlite3.connect('lils.db')
