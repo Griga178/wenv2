@@ -5,14 +5,6 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row
     return conn
 
-def get_post(): # все строки из таблицы
-    conn = get_db_connection()
-    post = conn.execute(f'SELECT * FROM answers').fetchall()
-    conn.close()
-    if post is None:
-        abort(404)
-    return post
-
 ins = "INSERT INTO answers (title, content) VALUES ('second Post', 'Content for the 2 post')"
 
 def ins_db(insa): # вставка в бд
@@ -22,7 +14,26 @@ def ins_db(insa): # вставка в бд
     conn.close()
 
 
+
+
+
+
+def get_info(table_name):
+    conn = get_db_connection()
+    row_list = conn.execute(f'SELECT * FROM {table_name}').fetchall()
+    conn.close()
+    if row_list is None:
+        print(404)
+    else:
+        print(f'{table_name}')
+        for row in row_list:
+            print(f'{row[0]},   {row[1]},   {row[2]}')
+
+#get_info('answers')
+#get_info('companies')
+#get_info('emploers')
+
+ins = "INSERT INTO answers_emploers_companies (answers_id, emploer_id, companies_id) VALUES (1, 1, 1)"
 #ins_db(ins)
-print(f'id,      date,           data,')
-for row in get_post():
-    print(f'{row[0]}, {row[1]}, {row[2]},')
+
+get_info('answers_emploers_companies')
