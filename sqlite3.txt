@@ -1,0 +1,3 @@
+https://zametkinapolyah.ru/zametki-o-mysql/chast-7-1-komanda-select-v-sqlite3-operator-select-v-sqlite3.html
+
+https://www.sqlitetutorial.net/sqlite-inner-join/
