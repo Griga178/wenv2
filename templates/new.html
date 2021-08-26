@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% block title %} Welcome to FlaskBlog {% endblock %}</h1>
+<table>
+  {% for post in posts %}
+  <tr>
+    <td>{{ post['short_form'] }} "{{ post['company_name'] }}"</td>
+    <td>Ответ на запрос №{{ post['answer_number'] }}</td>
+    <td> от {{ post['answer_date'] }}</td>
+    <td>{{ post['emploer_name'] }}</td>
+    <td>{{ post['emploer_surname'] }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

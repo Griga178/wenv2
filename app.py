@@ -13,13 +13,13 @@ app.config['SECRET_KEY'] = 'your secret key'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
-def get_db_connection():
-    conn = sqlite3.connect('database.db')
+def get_db_connection(name):
+    conn = sqlite3.connect(name)
     conn.row_factory = sqlite3.Row
     return conn
 
 def get_post(post_id):
-    conn = get_db_connection()
+    conn = get_db_connection('database.db')
     post = conn.execute('SELECT * FROM posts WHERE id = ?',
                         (post_id,)).fetchone()
     conn.close()
@@ -29,10 +29,17 @@ def get_post(post_id):
 
 @app.route('/')
 def index():
-    conn = get_db_connection()
+    conn = get_db_connection('database.db')
     posts = conn.execute('SELECT * FROM posts').fetchall()
     conn.close()
     return render_template('index.html', posts=posts)
+
+@app.route('/new')
+def new():
+    conn = get_db_connection('lils.db')
+    posts = conn.execute('SELECT answer_number, answer_date, emploer_name, emploer_surname, short_form, company_name FROM answers INNER JOIN emploers ON emploers.emploer_id = answers.emploer INNER JOIN companies ON companies.company_id = answers.company INNER JOIN forms ON forms.form_id = companies.company_form;').fetchall()
+    conn.close()
+    return render_template('new.html', posts=posts)
 
 
 @app.route('/<int:post_id>')
@@ -49,7 +56,7 @@ def create():
         if not title:
             flash('Title is required!')
         else:
-            conn = get_db_connection()
+            conn = get_db_connection('database.db')
             conn.execute('INSERT INTO posts (title, content) VALUES (?, ?)',
                          (title, content))
             conn.commit()
@@ -92,7 +99,7 @@ def edit(id):
         if not title:
             flash('Title is required!')
         else:
-            conn = get_db_connection()
+            conn = get_db_connection('database.db')
             conn.execute('UPDATE posts SET title = ?, content = ?'
                          ' WHERE id = ?',
                          (title, content, id))
@@ -105,7 +112,7 @@ def edit(id):
 @app.route('/<int:id>/delete', methods=('POST',))
 def delete(id):
     post = get_post(id)
-    conn = get_db_connection()
+    conn = get_db_connection('database.db')
     conn.execute('DELETE FROM posts WHERE id = ?', (id,))
     conn.commit()
     conn.close()
