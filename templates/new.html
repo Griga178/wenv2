@@ -1,7 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>{% block title %} Welcome to FlaskBlog {% endblock %}</h1>
+<h1>{% block title %} Страница с ответами на запросы и работа с ними {% endblock %}</h1>
+<a href="{{url_for('new_post', table_name='answers')}}">Показать все запросы</a><br>
+<a href="{{url_for('new')}}">Создать новый запрос</a><br>
+<a href="{{url_for('new')}}">Добавить новую компанию</a><br>
+<a href="{{url_for('new_post', table_name='companies')}}">Посмотреть на все компании</a><br>
+<a href="{{url_for('new')}}">Добавить новуго пользователя</a><br>
+<a href="{{url_for('new')}}">Посмотреть на всех пользователей</a><br>
 <table>
   {% for post in posts %}
   <tr>

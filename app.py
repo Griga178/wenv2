@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, url_for, flash, redirect, sen
 from werkzeug.exceptions import abort
 from werkzeug.utils import secure_filename
 
+
 # https://flask-russian-docs.readthedocs.io/ru/latest/patterns/fileuploads.html
 UPLOAD_FOLDER = './uploads'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'xlsx'])
@@ -27,13 +28,6 @@ def get_post(post_id):
         abort(404)
     return post
 
-@app.route('/')
-def index():
-    conn = get_db_connection('database.db')
-    posts = conn.execute('SELECT * FROM posts').fetchall()
-    conn.close()
-    return render_template('index.html', posts=posts)
-
 @app.route('/new')
 def new():
     conn = get_db_connection('lils.db')
@@ -41,7 +35,25 @@ def new():
     conn.close()
     return render_template('new.html', posts=posts)
 
+# Главная страница
+@app.route('/')
+def index():
+    conn = get_db_connection('database.db')
+    posts = conn.execute('SELECT * FROM posts').fetchall()
+    conn.close()
+    return render_template('index.html', posts=posts)
 
+def all_post(table_name):
+    conn = get_db_connection('lils.db')
+    post = conn.execute(f'SELECT * FROM {table_name};').fetchall()
+    if post is None:
+        abort(404)
+    return post
+
+
+
+
+# вывод строки из бд по post_id
 @app.route('/<int:post_id>')
 def post(post_id):
     post = get_post(post_id)
@@ -64,6 +76,7 @@ def create():
             return redirect(url_for('index'))
 
     return render_template('create.html')
+
 
 
 

@@ -42,7 +42,11 @@ def new_get(table_name):
         print(404)
     else:
         for row in row_list:
-            print(f'{row[0]} {row[1]} {row[2]} {row[3]} {row[4]} {row[5]} ')
+            new_list=[]
+            for i in row:
+                new_list.append(i)
+            print(' '.join(new_list))
+            #print(f'{row[0]} {row[1]} {row[2]} {row[3]} {row[4]} {row[5]} ')
 
 #get_info('answers')
 #get_info('companies')
@@ -51,7 +55,7 @@ def new_get(table_name):
 #ins = "INSERT INTO answers_emploers_companies (answers_id, emploer_id, companies_id) VALUES (1, 1, 1)"
 ins = "SELECT name, small_name FROM companies INNER JOIN forms ON forms.form_id = companies.form;"
 
-ins2 = "SELECT answer_number, answer_date, emploer_name, emploer_surname, short_form, company_name FROM answers INNER JOIN emploers ON emploers.emploer_id = answers.emploer INNER JOIN companies ON companies.company_id = answers.company INNER JOIN forms ON forms.form_id = companies.company_form;"
+ins2 = "SELECT short_form, company_name, answer_number, answer_date, emploer_name, emploer_surname FROM answers INNER JOIN emploers ON emploers.emploer_id = answers.emploer INNER JOIN companies ON companies.company_id = answers.company INNER JOIN forms ON forms.form_id = companies.company_form;"
 new_get(ins2)
 
 #get_info('answers_emploers_companies')

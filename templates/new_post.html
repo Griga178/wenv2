@@ -1,0 +1,13 @@
+{% extends 'new_base.html' %}
+
+{% block content %}
+<table>
+  {% for post in posts %}
+  <tr>
+    {% for el in post %}
+    <td>{{ el }}</td>
+    {% endfor %}
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

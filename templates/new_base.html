@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+  <title>{% block title %} {% endblock %}</title>
+</head>
+
+<body>
+  <a href="/">Главная</a>
+  <a href="{{ url_for('new_post', table_name='answers')}}">Все ответы</a>
+  <a href="{{ url_for('new_post', table_name='companies')}}">Все компании</a>
+  <a href="{{ url_for('new_post', table_name='emploers')}}">Все сотрудники</a>
+  <br>
+  {% block content %} {% endblock %}
+</body>
+
+</html>
