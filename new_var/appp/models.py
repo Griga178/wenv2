@@ -6,39 +6,30 @@
 # https://pythonru.com/biblioteki/sqlalchemy-v-flask
 
 import sys
-from sqlalchemy import Column, ForeignKey, Integer, String
-# для определения таблицы и модели
+#from sqlalchemy import Column, ForeignKey, Integer, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 # для создания отношений между таблицами
 from sqlalchemy.orm import relationship # пока не надо
 # для настроек
-from sqlalchemy import create_engine
+from sqlalchemy import *
+# для определения таблицы и модели
 # создание экземпляра declarative_base
 Base = declarative_base()
 
-my_base = 'sqlite:///appp/main.db'
+my_base = 'sqlite:///main.db' #appp/
 engine = create_engine(f'{my_base}?check_same_thread=False')
 
 # здесь добавим классы
-# мы создаем класс Book наследуя его из класса Base.
-'''
-class Book(Base):
-    __tablename__ = 'book'
 
-    id = Column(Integer, primary_key=True)
-    title = Column(String(250), nullable=False)
-    author = Column(String(250), nullable=False)
-    genre = Column(String(250))
-
-# создает экземпляр create_engine в конце файла
-#engine = create_engine('sqlite:///appp/my_collection.db')
-
-#Base.metadata.create_all(engine)
-'''
+association_table = Table('association', Base.metadata,
+    Column('left_id', ForeignKey('systems.id')),
+    Column('right_id', ForeignKey('systems.id'))
+)
 
 class  System_s(Base):
     __tablename__ = 'systems'
-    id = Column(Integer(), primary_key=True)
+    id = Column(Integer, primary_key=True)
     name = Column(String(255), nullable=False)
+
 
 Base.metadata.create_all(engine)

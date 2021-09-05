@@ -1,11 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Hi, world!</h1>
+<h1>Все элементы:</h1>
+<table>
 {% for item in list %}
 <tr>
-  <td>{{ item.name }}</td>
+<td>{{ item.id }}</td>
+<td>{{ item.name }}</td>
+<td><a href="{{url_for('deleteSys', item_id = item.id )}}">
+      Удалить</a></td>
 </tr>
 {% endfor %}
 
+</table>
 
 {% endblock %}
