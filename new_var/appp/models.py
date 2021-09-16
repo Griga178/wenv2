@@ -20,16 +20,23 @@ my_base = 'sqlite:///main.db' #appp/
 engine = create_engine(f'{my_base}?check_same_thread=False')
 
 # здесь добавим классы
-
+'''
 association_table = Table('association', Base.metadata,
     Column('left_id', ForeignKey('systems.id')),
     Column('right_id', ForeignKey('systems.id'))
-)
+)'''
 
 class  System_s(Base):
     __tablename__ = 'systems'
     id = Column(Integer, primary_key=True)
     name = Column(String(255), nullable=False)
+
+class Link_s(Base):
+    __tablename__ = 'links'
+    system_id = Column(Integer, ForeignKey('systems.id'), primary_key=True)
+    element_id = Column(Integer, ForeignKey('systems.id'))
+
+
 
 
 Base.metadata.create_all(engine)

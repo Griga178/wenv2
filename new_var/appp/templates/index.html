@@ -1,16 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Все элементы:</h1>
+<h2>Место, где показана вся таблица</h2>
 <table>
-{% for item in list %}
-<tr>
-<td>{{ item.id }}</td>
-<td>{{ item.name }}</td>
-<td><a href="{{url_for('deleteSys', item_id = item.id )}}">
-      Удалить</a></td>
-</tr>
-{% endfor %}
+  {% for item in list %}
+  <tr>
+    <td>{{ item.id }}</td>
+    <td>{{ item.name }}</td>
+    <td><a href="{{url_for('deleteSys', item_id = item.id )}}">
+        Удалить</a></td>
+  </tr>
+  {% endfor %}
 
 </table>
+<h2>Место, где показаны связи между таблицами 1 и 2</h2>
 
 {% endblock %}

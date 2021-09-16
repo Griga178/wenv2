@@ -9,7 +9,8 @@ session = DBSession()
 
 @app.route('/')
 def index():
-    info = session.query(System_s).all()
+    info = session.query(System_s).all()# + session.query(System_2).all()
+    #new_info =
 
     return render_template('index.html', list = info)
 
@@ -17,7 +18,7 @@ def index():
 @app.route('/new', methods=['GET', 'POST'])
 def newSys():
     if request.method == 'POST':
-        newSys = System_s(name = request.form['name'])
+        newSys = System_s(name = request.form['name']) # System_s
         session.add(newSys)
         session.commit()
         return redirect(url_for('index'))
@@ -27,7 +28,7 @@ def newSys():
 # Эта функция для удаления элементов
 @app.route('/<int:item_id>/delete/', methods=['GET', 'POST'])
 def deleteSys(item_id):
-    sysToDelete = session.query(System_s).filter_by(id=item_id).one()
+    sysToDelete = session.query(System_s).filter_by(id=item_id).one() #System_s
     if request.method == 'POST':
         session.delete(sysToDelete)
         session.commit()
