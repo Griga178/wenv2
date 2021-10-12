@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="test_styles.css">
+
+    <title>{% block title %} {% endblock %}</title>
+  </head>
+  <body>
+
+    <div class="container">
+          <!-- header -->
+      <div class="header">
+
+        <div class="name">Дичь какая то</div>
+
+      </div>
+
+          <!-- Меню сайта -->
+      <div class="menu">
+        <ul>
+          <li><a href="#">Функция 1 (Показать список имен (10 шт.))</a></li>
+          <li><a href="#">Функция 2 (Показать список характеристики имени (обязательные / необязательные))</a></li>
+          <li><a href="#">Функция 3 (поиск информации по поставщикам)</a></li>
+        </ul>
+      </div>
+
+          <!-- Содержимое страницы -->
+      <div class="middle">
+           <p>{% block content %} {% endblock %}</p>
+      </div>
+
+      <!-- Фуутер -->
+      <div class="footer">
+        <p>&copy; 2021 index.com Все права защищены.</p>
+      </div>
+    </div>
+
+  </body>
+</html>

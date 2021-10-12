@@ -1,0 +1,18 @@
+.map {
+  height: 374px;
+}
+.emailform:focus {
+  background-color: #eaeaea;
+  color: blue;
+}
+.textform {
+  text-transform: capitalize;
+}
+
+.textform:focus {
+  background-color: #eaeaea;
+  color: blue;
+}
+.adress{
+  font-size: 22px;
+}

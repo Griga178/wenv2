@@ -4,7 +4,7 @@ https://developer.mozilla.org/ru/docs/Learn/Server-side/Django/skeleton_website
 
 https://www.digitalocean.com/community/tutorials/how-to-make-a-web-application-using-flask-in-python-3-ru
 
-запуск сервера: 
+запуск сервера:
 app.py
 
 http://127.0.0.1:5000/
@@ -12,7 +12,7 @@ http://127.0.0.1:5000/
 http://192.168.1.81:5000/
 
 
-второе приложение ( С ФОРМОЙ ВХОДА), отдельное
+второе приложение ( С ФОРМОЙ ВХОДА), отдельное (/new_var)
 https://habr.com/ru/post/194062/
 
 run.py

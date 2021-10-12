@@ -1,0 +1,49 @@
+.container {
+  width: 98%;
+  margin: 0 auto;
+}
+.header {
+  height: 160px;
+  background-color: #e1e1e1;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  border-bottom: 1px solid #bfbfbf;
+}
+
+.menu li a{
+  text-decoration: none;
+  color: black;
+}
+.menu li a:hover {
+  color: #1a1a1f;
+  border-bottom: 7px solid white;
+  margin-bottom: -1px;
+  border-radius: 5px;
+}
+.menu li a:visited{
+  color: #5a5a5f;
+}
+.menu li a:visited:hover{
+  color: #1a1a1f;
+}
+
+.name{
+  font-family: fantasy;
+  font-size: 3em;
+  margin-top: 900px;
+  margin-left: 5px;
+  float: right;
+}
+.menu ul{
+  float: left;
+  margin-top: 110px;
+  list-style-type: none;
+  float: right;
+  margin-right: 3%
+}
+
+.menu ul li {
+  display: inline;
+  font-size: 25px;
+  font-family: cursive;
+}

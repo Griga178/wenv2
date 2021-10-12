@@ -1,0 +1,12 @@
+{% extends 'test_base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Index {% endblock %}</h1>
+
+    {% for post in posts %}
+            <p>{{ post }}</p>
+    {% endfor %}
+    <form class="" action="index.html" method="post">
+
+    </form>
+{% endblock %}

@@ -1,0 +1,87 @@
+/*Стили товаров в каталоге*/
+.goodname{
+  height: 60px;
+  font-weight: bold;
+  font-family: cursive;
+  font-size: 25px;
+  padding-left: 20px;
+}
+.goodimg{
+  height: 500px;
+  width: 500px;
+  float: left;
+}
+.goodimg img{
+  width: 500px;
+}
+.goodabout{
+  margin-left: 20px;
+  width: 500px;
+  float: left;
+  font-size: 18px;
+}
+.goodabout span {
+  color: black;
+  font-size: 20px;
+  font-weight: 400;
+  font-weight: bold;
+  background-color: #eaeaea
+}
+.goodabout table {
+  margin-top: 20px;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.goodabout table td {
+    border: 1px solid black;
+}
+.goodabout p::first-letter {
+  font-size: 200%;
+  color: red;
+  font-family: serif;
+}
+.shortd {
+  color: #707070;
+  font-size: 20px;
+  font-style: italic;
+  line-height: 22px;
+}
+.longd {
+  color: #484343;
+  font-size: 20px;
+  font-weight: 400;
+  font-family: cursive;
+  line-height: 24px;
+  text-align: left;
+}
+
+.buy {
+  margin-top: 550px;
+  margin-left: 30px;
+  padding: 20px;
+}
+
+.buy input {
+  text-decoration: none;
+  height: 40px;
+  width: 110px;
+  font-weight: bold;
+  font-family: cursive;
+  font-size: 20px;
+  color: white;
+  background-color: rgb(212,75,56)
+}
+
+.buy input:hover {
+  background-color: green;
+}
+
+.goodimg a:hover {
+  outline:none;
+}
+
+.goodimg a {
+  text-decoration: none;
+  outline: 2px solid black;
+}

@@ -20,7 +20,7 @@ def get_db_connection(name):
     return conn
 
 def get_post(post_id):
-    conn = get_db_connection('database.db')
+    conn = get_db_connection('sql_db/database.db')
     post = conn.execute('SELECT * FROM posts WHERE id = ?',
                         (post_id,)).fetchone()
     conn.close()
