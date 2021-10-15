@@ -2,11 +2,23 @@
 
 {% block content %}
     <h1>{% block title %} Index {% endblock %}</h1>
-
+    <p> Найдено: {{ message }} ИНН</p>
     {% for post in posts %}
             <p>{{ post }}</p>
     {% endfor %}
-    <form class="" action="index.html" method="post">
 
+    <form method="post">
+
+      <div class="">
+        <!-- скрытый параметр -->
+        <input type="hidden" name="index" value=10>
+        <input type="submit" class="btn btn-dark" value="Вывести 10 Номеров">
+        <!-- скрытый параметр -->
+        <input type="hidden" name="index" value=20>
+        <input type="submit" class="btn btn-dark" value="Вывести 20 Номеров">
+        <!-- скрытый параметр -->
+        <input type="hidden" name="index" value=30>
+        <input type="submit" class="btn btn-dark" value="Вывести 30 Номеров">
+      </div>
     </form>
 {% endblock %}
