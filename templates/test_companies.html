@@ -1,0 +1,49 @@
+{% extends 'test_base.html' %}
+
+{% block content %}
+  <!-- Форма поиска компании по инн -->
+  <form method="post">
+    <div class="inn_search">
+      <label for="companies_form">INN</label>
+      <input type="text" name="companies_form"
+            placeholder="Поиск по ИНН" value="{{request.form['companies_form']}}">
+      </input>
+    </div>
+    <div class="inn_search">
+        <button type="submit">Submit</button>
+    </div>
+  </form>
+  <!-- "Область" куда выводятся результаты -->
+    <h1>{% block title %} Компании {% endblock %}</h1>
+    <p>Таблица</p>
+    {% for post in posts %}
+            <p>{{ post }}</p>
+    {% endfor %}
+
+    <!--<form method="post">
+
+      <div class="">
+         скрытый параметр
+          <input type="hidden" name="index" value=10>
+          <input type="submit" class="btn btn-dark" value="Вывести 10 Номеров">
+          <!-- скрытый параметр
+          <input type="hidden" name="index" value=20>
+          <input type="submit" class="btn btn-dark" value="Вывести 20 Номеров">
+        <!-- скрытый параметр
+        <input type="hidden" name="index" value=30>
+        <input type="submit" class="btn btn-dark" value="Вывести 30 Номеров">
+      </div>
+    </form>
+    -->
+    <form method="post">
+      <!-- скрытый параметр  -->
+      <input type="hidden" name="page_number" value=10>
+      <input type="submit" class="btn btn-dark" value="Следующие 10 компаний">
+    </form>
+
+{% endblock %}
+
+
+<!--  {% if message %}
+        <p>{{ message }}</p>
+    {% endif %} -->
