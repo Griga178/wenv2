@@ -1,0 +1,47 @@
+{% extends 'test_base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Главная страница {% endblock %}</h1>
+    <p> содержимое страницы: </p>
+    <p> список ссылок на функции типа выгрузить данные компаний и тд </p>
+
+    <div class="menu">
+      <ul>
+        <li><a href="#">Функция 2 (Показать список характеристики имени (обязательные / необязательные)) "Не активна"</a></li>
+        <li><a href="#">Функция 3 (поиск информации по поставщикам) "Не активна"</a></li>
+    </div>
+      </ul>
+      <p>Пока тут создаются и тестятся функции</p>
+      <h4>Функция добаления списка на сервер</h4>
+
+
+      <br><br>
+      <p>Что добавили:</p>
+      {% if list_of_values %}
+
+        {% for value in list_of_values %}
+
+            <p>{{ value }}</p>
+
+        {% endfor %}
+
+      {% else %}
+        <p>ПУСТО</p>
+        <form method="post">
+          <div>
+            <label for="values_form">INN</label>
+            <input type="text" name="values_form"
+                  placeholder="Добавление ИНН" value="{{request.form['values_form']}}">
+            </input>
+          </div>
+          <div>
+              <button type="submit">Добавит</button>
+          </div>
+        </form>
+      {% endif %}
+
+
+
+
+
+{% endblock %}

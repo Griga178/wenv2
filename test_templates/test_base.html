@@ -11,20 +11,18 @@
     <div class="container">
           <!-- header -->
       <div class="header">
-
-        <div class="name">Дичь какая то</div>
-
+           <h1>Заголовок в основном шаблоне</h1>
       </div>
 
           <!-- Меню сайта -->
+      <h3>Меню</h3>
       <div class="menu">
         <ul>
-          <li><a href="#">Функция 1 (Показать список имен (10 шт.))</a></li>
-          <li><a href="#">Функция 2 (Показать список характеристики имени (обязательные / необязательные))</a></li>
-          <li><a href="#">Функция 3 (поиск информации по поставщикам)</a></li>
+          <li><a href="{{url_for('index')}}">Главная страница</a></li>
+          <li><a href="{{url_for('working_table')}}">Рабочая таблица</a></li>
+          <li><a href="{{url_for('show_companies')}}">Информация по поставщикам</a></li>
         </ul>
       </div>
-
           <!-- Содержимое страницы -->
       <div class="middle">
            <p>{% block content %} {% endblock %}</p>

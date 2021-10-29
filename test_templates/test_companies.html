@@ -1,6 +1,16 @@
 {% extends 'test_base.html' %}
 
 {% block content %}
+
+  <h2>Сводная инфа:</h2>
+
+  {% if amoint_of_companies %}
+  <p>Компаний в базе: <b>{{amoint_of_companies}} шт.</b> </p>
+  {% endif %}
+
+  <h2>Найти в базе:</h2>
+  <h4>По ИНН (Полное совпадение)</h4>
+
   <!-- Форма поиска компании по инн -->
   <form method="post">
     <div class="inn_search">
@@ -9,16 +19,37 @@
             placeholder="Поиск по ИНН" value="{{request.form['companies_form']}}">
       </input>
     </div>
+    <br>
     <div class="inn_search">
         <button type="submit">Submit</button>
     </div>
   </form>
+  <h4>По чему угодно (Значение ищется сначало в ИНН потом в Адресе, потом в Телефоне)</h4>
+
   <!-- "Область" куда выводятся результаты -->
     <h1>{% block title %} Компании {% endblock %}</h1>
     <p>Таблица</p>
-    {% for post in posts %}
-            <p>{{ post }}</p>
-    {% endfor %}
+
+    <table>
+      <tr>
+        <td>Название компании</td>
+        <td>Адрес</td>
+        <td>Телефон</td>
+        <td>ИНН</td>
+      </tr>
+      {% if posts %}
+        {% for post in posts %}
+        <tr>
+          <td>{{ pickle_set[post][0] }}</td>
+          <td>{{ pickle_set[post][1] }}</td>
+          <td>{{ pickle_set[post][2] }}</td>
+          <td>{{ post }}</td>
+
+        </tr>
+        {% endfor %}
+      {% endif %}
+
+    </table>
 
     <!--<form method="post">
 
@@ -34,13 +65,15 @@
         <input type="submit" class="btn btn-dark" value="Вывести 30 Номеров">
       </div>
     </form>
-    -->
+
     <form method="post">
-      <!-- скрытый параметр  -->
+      <!-- скрытый параметр 
       <input type="hidden" name="page_number" value=10>
       <input type="submit" class="btn btn-dark" value="Следующие 10 компаний">
     </form>
-
+    -->
+    <br>
+<a href="#"> Кнопка - скачать Excel файл</a>
 {% endblock %}
 
 

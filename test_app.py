@@ -8,7 +8,7 @@ import sys
 
 #https://habr.com/ru/post/347926/
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder = "test_templates")
 #app = Flask(__name__, static_folder = static_path)
 app.config['SECRET_KEY'] = 'your secret key'
 
@@ -37,26 +37,15 @@ def show_list(list_name, amount = 20, cur_page = 0):
 # Главная страница
 @app.route('/', methods = ('GET', 'POST'))
 def index():
-
-    if request.method == 'GET':
-        posts = inn_list()
+    list_of_values = []
 
     if request.method == 'POST':
-        inn_value = request.form['INN']
+        values = request.form['values_form']
+        list_of_values = values.split(" ")
+        print(values)
 
-        if not inn_value:
-            flash('Title is required!')
-        else:
-            print(inn_value)
 
-            try:
-                posts = pickle_set[inn_value]
-            except:
-                posts = ['Значение не найдено']
-
-            return render_template('test_index.html', posts = posts)
-
-    return render_template('test_index.html', posts = posts[0:10]) #,
+    return render_template('test_index.html', list_of_values = list_of_values)
 
 # добавление слова в множество
 @app.route('/create', methods = ('GET', 'POST'))
@@ -77,15 +66,19 @@ def create():
 # Страница работы с ПОСТАВЩИКАМИ
 @app.route('/companies', methods = ('GET', 'POST'))
 def show_companies():
+    amoint_of_companies = ""
+    posts = []
+    comp_key_list = inn_list()
+
     # Первый вход на страницу
     if request.method == 'GET':
         # вывод первых 10 компаний из общего списка
-        posts = inn_list()
-        current_page = 20
-
+        amoint_of_companies = len(comp_key_list)
+        #posts = show_list(comp_key_list)
+        #current_page = 20
     elif request.method == 'POST':
         try:
-            # Если задействована форма номера страницы
+            # Если задействована форма номера страницы (способ слушать разные формы с 1 страницы)
             list_of_page = request.form['page_number']
             script_number = 1
         except:
@@ -100,18 +93,27 @@ def show_companies():
 
 
         if script_number == 1:
+            # Идем по этому сценарию, потому что выбрана соотв. форма
             form_value = int(list_of_page)
             posts = inn_list(form_value, form_value + 10)
         else:
             # поиск ключа в словаре
             try:
-                posts = pickle_set[form_data]
+                # Список инн
+                list_of_values = form_data.split(" ")
+                for value in list_of_values:
+                    if value in comp_key_list:
+                        posts.append(value)
+                #posts = [form_data]
             except:
                 posts = ['Значение не найдено']
 
 
-    return render_template('test_companies.html', posts = posts)
+    return render_template('test_companies.html', posts = posts, pickle_set = pickle_set, amoint_of_companies = amoint_of_companies)
 
+@app.route('/working_table', methods = ('GET', 'POST'))
+def working_table():
+    return render_template('test_working_table.html')
 
 if __name__ == "__main__":
     #app.run(host= '0.0.0.0')
