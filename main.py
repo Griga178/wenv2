@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, url_for
-from db_func import *
+#from db_func import *
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'

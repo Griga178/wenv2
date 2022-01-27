@@ -2,13 +2,25 @@
 
 <head>
   <title>{% block title %} Моя база данных {% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
   <li>    <a href="{{url_for('index')}}">Главная</a>  </li>
-  <li>    <a href="{{url_for('newSys')}}">Добавление нового элемента</a>  </li>
-  <li>    <a href="#">Иерархия систем ( не готово )</a>  </li>
+  <h2>Таблицы:</h2>
+  <li><a href="{{url_for('proto_table')}}">Прототипы (ссылки на предметы)</a></li>
+  <li><a href="{{url_for('obj_table')}}">"Модели" (Объекты, артикулы)</a></li>
+  <li><a href="{{url_for('subj_table')}}">Предметы (Названия группы моделей)</a></li>
 
+  <li><a href="{{url_for('measure_table')}}">Единицы измерения</a></li>
+  <li><a href="{{url_for('chars_table')}}">Характеристики</a></li>
+  <p>Один ко многим</p>
+  <li>Связь объект - предмет</li>
+  <li><a href="{{url_for('sub_obj_prot')}}">Связь прототипы - объект - предмет</a></li>
+  <p>Многие ко многим</p>
+  <li>Связь характерисика - возможные единицы измерения</li>
+  <li>Связь "Модель" - характеристики (+ значение(текст) + ед.изм.(id))</li>
+  <li>Связь Предметы - допустимые характеристики</li>
 
   {% block content %}{% endblock %}
 </body>

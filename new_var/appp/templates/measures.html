@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+
+<br>
+<form method="post">
+  <!--<input type="text" maxlength="255" name="id" placeholder="ID">-->
+  <input type="text" maxlength="255" name="meas_name" placeholder="Название ед. изм.">
+  <input type="submit" name="subject" value="Добавить ед. изм.">
+</form>
+<table border="1" cellpadding="4" cellspacing="0">
+  <caption>Единицы измерения</caption>
+  <tr>
+    <th>id в системе</th><th>Название ед. изм.</th><th>Функции</th>
+  </tr>
+  {% for item in data_list %}
+  <tr>
+    <td>{{ item.id }}</td>
+    <td><a href="#" target="_blank">{{ item.name[:35] }}</a></td>
+    <td><a href="{{url_for('proto_del', item_id = item.id, table_name = 'Measure' )}}">Удалить</a></td>
+
+  </tr>
+
+  {% endfor %}
+</table>
+
+{% endblock %}

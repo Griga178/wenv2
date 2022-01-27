@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 import os
 import sys
+from flask_sqlalchemy import SQLAlchemy
+from test_bases import *
 
 #static_path = os.path.join(project_root, '../client/static')
 #https://www.digitalocean.com/community/tutorials/how-to-make-a-web-application-using-flask-in-python-3-ru
@@ -14,6 +16,8 @@ app.config['SECRET_KEY'] = 'your secret key'
 
 # База данных - Словари, множества
 test_set = {'Компьютер', 'Стул'}
+db = SQLAlchemy(app)
+#db.create_all()
 
 # Функции
 import pickle
@@ -47,6 +51,17 @@ def index():
 
     return render_template('test_index.html', list_of_values = list_of_values)
 
+@app.route('/tables_pages', methods = ('GET', 'POST'))
+def tables_pages():
+    list_of_values = []
+
+    if request.method == 'POST':
+        values = request.form['values_form']
+        list_of_values = values.split(" ")
+        print(values)
+
+
+    return render_template('test_tables.html')
 # добавление слова в множество
 @app.route('/create', methods = ('GET', 'POST'))
 def create():

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<br>
+<form method="post">
+  <!--<input type="text" maxlength="255" name="id" placeholder="ID">-->
+  <input type="text" maxlength="255" name="id_subject" placeholder="ID Предмета">
+  <input type="text" maxlength="255" name="obj_name" placeholder="Название">
+  <input type="submit" name="add_object" value="Добавить объект">
+</form>
+<table border="1" cellpadding="4" cellspacing="0">
+  <caption>Список прототипов</caption>
+  <tr>
+    <th>id в системе</th><th>ID предмета</th><th>Имя предмета</th><th>Название модели</th><th>Функции</th>
+  </tr>
+  {% for item in data_list %}
+  <tr>
+    <td>{{ item.id }}</td>
+    <td>{{ item.subject_id }}</td>
+    <td>{{ item.subject_name.name }}</td>
+    <td><a href="#" target="_blank">{{ item.name[:35] }}</a></td>
+    <td><a href="{{url_for('proto_del', item_id = item.id, table_name = 'Object' )}}">Удалить</a></td>
+
+  </tr>
+
+  {% endfor %}
+</table>
+
+{% endblock %}
