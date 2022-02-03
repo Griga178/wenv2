@@ -27,20 +27,23 @@ def proto_table():
 @app.route('/<int:item_id><table_name>', methods=['GET', 'POST'])
 def proto_del(item_id, table_name):
     if table_name == 'Prototype':
-        id_of_del = session.query(Prototype).filter_by(id=item_id).one()
+        id_of_del = session.query(Prototype).filter_by(id = item_id).one()
         re_func_name = 'proto_table'
     elif table_name == 'Object':
-        id_of_del = session.query(Object).filter_by(id=item_id).one()
+        id_of_del = session.query(Object).filter_by(id = item_id).one()
         re_func_name = 'obj_table'
     elif table_name == 'Subject':
-        id_of_del = session.query(Subject).filter_by(id=item_id).one()
+        id_of_del = session.query(Subject).filter_by(id = item_id).one()
         re_func_name = 'subj_table'
     elif table_name == 'Measure':
-        id_of_del = session.query(Measure).filter_by(id=item_id).one()
+        id_of_del = session.query(Measure).filter_by(id = item_id).one()
         re_func_name = 'measure_table'
     elif table_name == 'Characteristic':
-        id_of_del = session.query(Characteristic).filter_by(id=item_id).one()
+        id_of_del = session.query(Characteristic).filter_by(id = item_id).one()
         re_func_name = 'chars_table'
+    elif table_name == 'Mchmeva':
+        id_of_del = session.query(Model_char_measure_val).filter_by(some_id = item_id).one()
+        re_func_name = 'mcmv_table'
     session.delete(id_of_del)
     session.commit()
     return redirect(url_for(re_func_name))
@@ -81,7 +84,7 @@ def subj_table():
 
 @app.route('/connections')
 def sub_obj_prot():
-    data_list = session.query(Prototype).join(Object, Prototype.object_id == Object.id).join(Subject, Object.subject_id == Subject.id).all()
+    data_list = session.query(Prototype).all()
     return render_template('sub_obj_prot.html', data_list = data_list)
 
 @app.route('/measures', methods = ['GET', 'POST'])
@@ -103,3 +106,17 @@ def chars_table():
         session.commit()
     data_list = session.query(Characteristic).all()
     return render_template('chars.html', data_list = data_list)
+
+@app.route('/mcmv', methods = ['GET', 'POST'])
+def mcmv_table():
+    if request.method == 'POST':
+        data2 = request.form['model_id']
+        data3 = request.form['char_id']
+        data4 = request.form['mes_id']
+        data1 = request.form['value']
+        data = Model_char_measure_val(model_id = data2, char_id = data3, measure_id = data4, chars_val = data1)
+        session.add(data)
+        session.commit()
+    data_list = session.query(Model_char_measure_val).all()
+
+    return render_template('mcmv.html', data_list = data_list)
