@@ -6,9 +6,9 @@
 </head>
 
 <body>
-  <li>    <a href="{{url_for('index')}}">Главная</a>  </li>
+  <li><a href="{{url_for('index')}}">Главная</a>  </li>
   <h2>Таблицы:</h2>
-  <li><a href="{{url_for('proto_table')}}">Прототипы (ссылки на предметы)</a></li>
+  <li><a href="{{url_for('proto_table')}}">Добавление ссылок</a> </li>
   <li><a href="{{url_for('obj_table')}}">"Модели" (Объекты, артикулы)</a></li>
   <li><a href="{{url_for('subj_table')}}">Предметы (Названия группы моделей)</a></li>
 
@@ -19,8 +19,11 @@
   <li><a href="{{url_for('sub_obj_prot')}}">Связь прототипы - объект - предмет</a></li>
   <p>Многие ко многим</p>
   <li>Связь характерисика - возможные единицы измерения</li>
-  <li><a href="{{url_for('mcmv_table')}}">Связь "Модель" - характеристики</a></li>
+  <li><a href="{{url_for('mcmv_table')}}">Связь "Модель" - характеристики</a> -- <a href="{{url_for('mcmv_table_ver2', step = 1, model_id = 0)}}">Установка характеристик</a></li>
+  <li><a href="{{url_for('model_compare_func', subject_ids = 4)}}">Таблица Предмет - Известные модели - их характеристики</a></li>
   <li>Связь Предметы - допустимые характеристики</li>
+  <li><b><a href="{{url_for('subject_groups')}}">Выбираем предметы по характеристикам</a></b></li>
+  <li><b><a href="{{url_for('chars_group', step = 0, group_id = 0)}}">Группы моделей по схожим характеристикам</a></b></li>
 
   {% block content %}{% endblock %}
 </body>

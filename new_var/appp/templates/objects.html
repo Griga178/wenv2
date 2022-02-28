@@ -2,27 +2,34 @@
 {% block content %}
 <br>
 <form method="post">
-  <!--<input type="text" maxlength="255" name="id" placeholder="ID">-->
-  <input type="text" maxlength="255" name="id_subject" placeholder="ID Предмета">
+  <input type="text" maxlength="255" name="id_subject" placeholder="Предмет (id)" list="list_of_objects">
   <input type="text" maxlength="255" name="obj_name" placeholder="Название">
+  <input type="text" maxlength="255" name="producer_link" placeholder="Ссылка на производителя">
   <input type="submit" name="add_object" value="Добавить объект">
 </form>
+<a href="{{url_for('subj_table')}}" target = "_blank"> Создать предмет (Если нет предмета)</a>
 <table border="1" cellpadding="4" cellspacing="0">
-  <caption>Список прототипов</caption>
+  <caption>Список моделей</caption>
   <tr>
-    <th>id в системе</th><th>ID предмета</th><th>Имя предмета</th><th>Название модели</th><th>Функции</th>
+    <th>id в системе</th><th>Предмет</th><th>Название модели</th><th>Ссылки</th><th>Функции</th>
   </tr>
   {% for item in data_list %}
   <tr>
     <td>{{ item.id }}</td>
-    <td>{{ item.subject_id }}</td>
     <td>{{ item.subject_name.name }}</td>
-    <td><a href="#" target="_blank">{{ item.name[:35] }}</a></td>
-    <td><a href="{{url_for('proto_del', item_id = item.id, table_name = 'Object' )}}">Удалить</a></td>
+    <td>{{ item.name}}</td>
+    <td>{% if item.producer_link %}<a href="{{item.producer_link}}" target="_blank" >Ссылка на производителя</a><br>{% endif %}
+     Характеристики модели</td>
+    <td><a href="{{url_for('proto_del', item_id = item.id, table_name = 'Object' )}}">Удалить (безвозвратно)</a></td>
 
   </tr>
 
   {% endfor %}
 </table>
 
+<datalist id="list_of_objects">
+  {% for subject in subject_dict %}
+    <option value="{{subject.id}}">{{subject.name}}</option>
+  {% endfor %}
+</datalist>
 {% endblock %}

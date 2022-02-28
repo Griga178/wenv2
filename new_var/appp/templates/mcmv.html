@@ -4,23 +4,23 @@
 <br>
 <form method="post">
   <!--<input type="text" maxlength="255" name="id" placeholder="ID">-->
-  <input type="text" maxlength="255" name="model_id" placeholder="id Модели">
-  <input type="text" maxlength="255" name="char_id" placeholder="id Характеристики">
-  <input type="text" maxlength="255" name="mes_id" placeholder="id Ед. изм">
-  <input type="text" maxlength="255" name="value" placeholder="Значение">
+  <input type="text" maxlength="255" name="model_id" placeholder="id Модели" list="list_of_models">
+  <input type="text" maxlength="255" name="char_id" placeholder="id Характеристики" list="list_of_chars">
+  <input type="text" maxlength="255" name="mes_id" placeholder="id Ед. изм" list="list_of_measures">
+  <input type="text" maxlength="255" name="value" placeholder="Значение" list="list_of_objects">
   <input type="submit" name="subject" value="Добавить ед. изм.">
 </form>
 <table border="1" cellpadding="4" cellspacing="0">
   <caption>Таблица связей: Модель - характеристика</caption>
   <tr>
-    <th>id Модели</th><th>id Характеристики</th><th>Значение</th><th>id Ед. изм</th>
+    <th>Модель</th><th>Характеристика</th><th>Значение</th><th>Ед. изм</th>
   </tr>
   {% for item in data_list %}
   <tr>
-    <td>{{ item.model_id }} ({{ item.model_name.name }})</td>
-    <td>{{ item.char_id }} ({{ item.char_name.name}})</td>
-    <td>{{ item.chars_val }}</td>
-    <td>{{ item.measure_id }} ({{item.measure_name.name}})</td>
+    <td>{{ item.model_name.name}}</td>
+    <td>{{ item.char_name.name}}</td>
+    <td>{{item.chars_val}}</td>
+    <td>{{item.measure_name.name}}</td>
     <td><a href= "{{url_for('proto_del', item_id = item.some_id, table_name = 'Mchmeva')}}">Удалить</a></td>
 
   </tr>
@@ -28,5 +28,19 @@
   {% endfor %}
 </table>
 
-
+<datalist id="list_of_models">
+  {% for element in model_dict %}
+    <option value="{{element.id}}">{{element.name}}</option>
+  {% endfor %}
+</datalist>
+<datalist id="list_of_chars">
+  {% for element in chars_dict %}
+    <option value="{{element.id}}">{{element.name}}</option>
+  {% endfor %}
+</datalist>
+<datalist id="list_of_measures">
+  {% for element in measure_dict %}
+    <option value="{{element.id}}">{{element.name}}</option>
+  {% endfor %}
+</datalist>
 {% endblock %}

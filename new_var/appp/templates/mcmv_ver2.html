@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<br>
+
+{% if model_dict %}
+  <h3> Нужно выбрать модель для которой будем устанавливать характеристики</h3>
+  <p>Список моделей:</p>
+  {% for model in model_dict %}
+    <a href="{{url_for('mcmv_table_ver2', step = 2, model_id = model.id)}}">{{model.id}} {{model.name}}</a> <br>
+  {% endfor %}
+{% endif %}
+
+
+{% if mo_chars_dict %}
+<h4>Название предмета:<b> {{mo_chars_dict[0].model_name.subject_name.name}}</b></h4>
+<h4>Категории (м.б. группы)к которым относится модель:</h4>
+<li>Категория 1</li>
+<li>Категория 2</li>
+<br>
+  <table border = "1">
+    <tr>
+      <th>Модель</th><th>Название характеристики</th><th>Значение</th><th>Единица измерения</th>
+    </tr>
+    <tr>
+      <td rowspan="{{mo_chars_dict|length}}"><b>{{mo_chars_dict[0].model_name.name}}</b></td>
+    {% for char in mo_chars_dict %}
+
+        <td>{{char.char_name.name}}</td>
+        <td>{{char.chars_val}}</td>
+        <td>{{char.measure_name.name}}</td>
+      </tr>
+    {% endfor %}
+  </table>
+<div>Добавить новую характеристику</div>
+
+{% endif %}
+
+
+{% endblock %}

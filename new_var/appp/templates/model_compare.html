@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<br>
+<form method="post">
+  <!--<input type="text" maxlength="255" name="id" placeholder="ID">
+  <input type="text" maxlength="255" name="id_object" placeholder="ID Объекта">
+  <input type="text" maxlength="255" name="http_link" placeholder="Ссылка">
+  <input type="submit" name="add_prototype" value="Добавить прототип">-->
+</form>
+
+<table border="1" cellpadding="4" cellspacing="0">
+  <tr>
+    <th rowspan="2">Предмет</th>
+    <th rowspan="2">Характеристики</th>
+    <th colspan="{{data|length}}">Модели</th>
+  </tr>
+  <tr>
+    <!-- Тут список моделей "Первый цикл"-->
+    {% for model in data %}
+      <td><b>{{model.name}}</b> </td>
+    {% endfor %}
+    <!-- "Первый цикл" конец -->
+  </tr>
+
+  <tr>
+    <td rowspan="{{chars_set|length}}"><b>{{data[0].subject_name.name}}</b></td>
+    {% set counter = namespace(found = 0) %}
+    {% for characteristic in chars_set %}
+      <td><b>{{characteristic}}</b></td>
+      {% set char_is = namespace(found=false) %}
+
+        {% for model in data %}
+          {% for chars in model.model_chars %}
+            {% if chars.char_name.name == characteristic %}
+              {% set char_is.found = chars %}
+            {% endif %}
+          {% endfor %}
+
+          {% if char_is.found %}
+            <td><b>{{char_is.found.chars_val}}</b> ({{char_is.found.measure_name.name}})</td>
+          {% else %}
+            <td> - </td>
+          {% endif %}
+        {% endfor %}
+
+  </tr>
+    {% endfor %}
+
+
+</table>
+{% endblock %}

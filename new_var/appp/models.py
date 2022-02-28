@@ -17,7 +17,7 @@ from sqlalchemy import *
 # создание экземпляра declarative_base
 Base = declarative_base()
 metadata = MetaData()
-my_base = 'sqlite:///main.db' #appp/
+my_base = 'sqlite:///main3.db' #appp/
 engine = create_engine(f'{my_base}?check_same_thread=False')
 
 
@@ -38,7 +38,8 @@ class Object(Base):
     name = Column(String(255), nullable = False)
     subject_id = Column(Integer, ForeignKey('subjects.id'))
     subject_name = relationship('Subject')
-    #prototypes = relationship("Prototype", backref='objects')
+    prototypes = relationship("Prototype", backref='objects')
+    producer_link = Column(String(255))
 
 class Subject(Base):
     """Тут хранятся названия предметов"""
@@ -67,12 +68,29 @@ class Model_char_measure_val(Base):
     __tablename__ = 'model_chars'
     some_id = Column(Integer, primary_key = True)
     model_id = Column(Integer, ForeignKey('objects.id'))
-    model_name = relationship('Object')
+    model_name = relationship('Object', backref="model_chars")
     char_id = Column(Integer, ForeignKey('char_s.id'))
     char_name = relationship('Characteristic')
     measure_id = Column(Integer, ForeignKey('measures.id'))
     measure_name = relationship('Measure')
     chars_val = Column(String(255))
 
+class Groups(Base):
+    ''' Таблица названий групп моделей '''
+    __tablename__ = 'groups'
+    id = Column(Integer, primary_key = True)
+    name = Column(String(255), nullable = False)
 
+class Groups_measure(Base):
+    ''' Связь значений характеристик с названием группы '''
+    __tablename__ = 'groups_measure'
+    some_id = Column(Integer, primary_key = True)
+    groups_id = Column(Integer, ForeignKey('groups.id'))
+    groups_name = relationship('Groups', backref="groups_measure")
+    measure_id = Column(Integer, ForeignKey('measures.id'))
+    measure_name = relationship('Measure')
+    char_id = Column(Integer, ForeignKey('char_s.id'))
+    char_name = relationship('Characteristic')
+    chars_val_from_to = Column(String(255))
+    chars_val = Column(String(255))
 Base.metadata.create_all(engine)

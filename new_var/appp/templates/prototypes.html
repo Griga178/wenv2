@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 <br>
+<p><b> Тут выводится простой список ссылок на известные модели, <br> так же можно добавить еще ссылку и прикрепить ее к модели</b></p>
 <form method="post">
   <!--<input type="text" maxlength="255" name="id" placeholder="ID">-->
-  <input type="text" maxlength="255" name="id_object" placeholder="ID Объекта">
+  <input type="text" maxlength="255" name="id_object" placeholder="ID Объекта" list="list_of_objects">
   <input type="text" maxlength="255" name="http_link" placeholder="Ссылка">
   <input type="submit" name="add_prototype" value="Добавить прототип">
 </form>
@@ -25,5 +26,13 @@
 
   {% endfor %}
 </table>
+
+<br>
+<button type="button" name="button">Перейти по ссылкам и взять от туда название модели</button>
+
+<datalist id="list_of_objects">
+
+  <option value="1">Создать новый предмет</option>
+</datalist>
 
 {% endblock %}

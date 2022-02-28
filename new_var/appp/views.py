@@ -23,6 +23,8 @@ def proto_table():
         session.commit()
     data_list = session.query(Prototype).all()
     return render_template('prototypes.html', data_list = data_list)
+
+
 # Эта функция для удаления элементов по ID во всех таблицах
 @app.route('/<int:item_id><table_name>', methods=['GET', 'POST'])
 def proto_del(item_id, table_name):
@@ -44,6 +46,9 @@ def proto_del(item_id, table_name):
     elif table_name == 'Mchmeva':
         id_of_del = session.query(Model_char_measure_val).filter_by(some_id = item_id).one()
         re_func_name = 'mcmv_table'
+    elif table_name == 'Groups':
+        id_of_del = session.query(Groups).filter_by(id = item_id).one()
+        re_func_name = ('index')
     session.delete(id_of_del)
     session.commit()
     return redirect(url_for(re_func_name))
@@ -66,11 +71,13 @@ def obj_table():
     if request.method == 'POST':
         data2 = request.form['obj_name']
         data3 = request.form['id_subject']
-        data = Object(name = data2, subject_id = data3)
+        producer_link = request.form['producer_link']
+        data = Object(name = data2, subject_id = data3, producer_link = producer_link)
         session.add(data)
         session.commit()
     data_list = session.query(Object).all()
-    return render_template('objects.html', data_list = data_list)
+    subject_dict = session.query(Subject).all()
+    return render_template('objects.html', data_list = data_list, subject_dict = subject_dict)
 
 @app.route('/subjects', methods = ['GET', 'POST'])
 def subj_table():
@@ -117,6 +124,82 @@ def mcmv_table():
         data = Model_char_measure_val(model_id = data2, char_id = data3, measure_id = data4, chars_val = data1)
         session.add(data)
         session.commit()
-    data_list = session.query(Model_char_measure_val).all()
+    data_list = session.query(Model_char_measure_val).order_by(Model_char_measure_val.model_id).all()
+    model_dict = session.query(Object).all()
+    chars_dict = session.query(Characteristic).all()
+    measure_dict = session.query(Measure).all()
+    return render_template('mcmv.html', data_list = data_list,
+    model_dict = model_dict, chars_dict = chars_dict, measure_dict = measure_dict)
 
-    return render_template('mcmv.html', data_list = data_list)
+@app.route('/mcmv_ver2/<int:step><int:model_id>', methods = ['GET', 'POST'])
+def mcmv_table_ver2(step, model_id):
+    if step == 1:
+
+        if request.method == 'POST':
+            data2 = request.form['model_id']
+            data3 = request.form['char_id']
+            data4 = request.form['mes_id']
+            data1 = request.form['value']
+            data = Model_char_measure_val(model_id = data2, char_id = data3, measure_id = data4, chars_val = data1)
+            session.add(data)
+            session.commit()
+        data_list = session.query(Model_char_measure_val).all()
+        model_dict = session.query(Object).all()
+        chars_dict = session.query(Characteristic).all()
+        measure_dict = session.query(Measure).all()
+        return render_template('mcmv_ver2.html', data_list = data_list,
+        model_dict = model_dict, chars_dict = chars_dict, measure_dict = measure_dict)
+    elif step == 2:
+        mo_chars_dict = session.query(Model_char_measure_val).filter_by(model_id = model_id).all()
+        return render_template('mcmv_ver2.html', mo_chars_dict = mo_chars_dict)
+
+def func_for_table(subject_id):
+    """ Создаем set, в котором будут:
+        сам запрос в sql
+        все названия характеристик моделей"""
+    model_flaskdict = session.query(Object).filter_by(subject_id = subject_id).all()
+    chars_set = set()
+    # по id моделей выгружаем характеристики
+    for model in model_flaskdict:
+        mcmv_flaskdict = session.query(Model_char_measure_val).filter_by(model_id = model.id).all()
+        for chars in mcmv_flaskdict:
+            name = chars.char_name.name
+            chars_set.add(name)
+    return model_flaskdict, chars_set
+
+@app.route('/model_compare/<int:subject_ids>', methods = ['GET', 'POST'])
+def model_compare_func(subject_ids = 4):
+    some_table = func_for_table(subject_ids)
+    if len(some_table[0]) == 0:
+        #url_for('model_compare_func', subject_ids = 4)
+        return render_template('subjects.html')
+    else:
+        return render_template('model_compare.html', data = some_table[0], chars_set = some_table[1])
+
+@app.route('/sortded')
+def subject_groups():
+    return render_template('subjects_group.html')
+
+@app.route('/groups/<int:step><int:group_id>', methods = ['GET', 'POST'])
+def chars_group(step, group_id):
+    groups_dict = session.query(Groups).all()
+    chars_dict = False
+    groupp_name = ['']
+    if step == 1:
+        groupp_name = session.query(Groups).filter_by(id = group_id).all()
+        chars_dict = session.query(Groups_measure).filter_by(groups_id = group_id).all()
+    if request.method == 'POST':
+        if 'add_group' in request.form:
+            data = Groups(name = request.form['group_name'])
+            session.add(data)
+            session.commit()
+        else:
+            data = Groups_measure(groups_id = request.form['group_id'],
+                char_id = request.form['char_id'],
+                chars_val_from_to = request.form['chars_val_from_to'],
+                chars_val = request.form['chars_val'],
+                measure_id = request.form['measure_id'])
+            session.add(data)
+            session.commit()
+        print(request.form)
+    return render_template('groups.html', groups_dict = groups_dict, chars_dict = chars_dict, groupp_name = groupp_name)

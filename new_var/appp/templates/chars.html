@@ -4,19 +4,18 @@
 <br>
 <form method="post">
   <!--<input type="text" maxlength="255" name="id" placeholder="ID">-->
-  <input type="text" maxlength="255" name="char_name" placeholder="Название ед. изм.">
+  <input type="text" maxlength="255" name="char_name" placeholder="Название характеристики">
   <input type="submit" name="subject" value="Добавить ед. изм.">
 </form>
 <table border="1" cellpadding="4" cellspacing="0">
   <caption>Характеристики</caption>
   <tr>
-    <th>id в системе</th><th>Название хар-и</th><th>ед. изм.</th><th>Функции</th>
+    <th>id в системе</th><th>Название хар-и</th><th>Функции</th>
   </tr>
   {% for item in data_list %}
   <tr>
     <td>{{ item.id }}</td>
     <td><a href="#" target="_blank">{{ item.name[:35] }}</a></td>
-    <td>{{ item.measure_name.name }}</td>
     <td><a href="{{url_for('proto_del', item_id = item.id, table_name = 'Characteristic' )}}">Удалить</a></td>
 
   </tr>

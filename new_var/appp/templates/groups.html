@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<h4>Названия групп:</h4>
+{% for group_name in groups_dict %}
+  <li><a href="{{url_for('chars_group', step = 1, group_id = group_name.id)}}">{{group_name.name}} </a>
+    <a href="{{url_for('proto_del', item_id = group_name.id, table_name = 'Groups')}}">Удалить</a></li>
+{% endfor %}
+<form method="post">
+  <input type="text" maxlength="255" name="group_name" placeholder="Название группы">
+  <input type="submit" name="add_group" value="Добавить Группу">
+</form>
+
+
+<table border="1" cellspacing = 0>
+  <caption>Таблица ввода характеристик</caption>
+  <tr>
+    <th>Название группы</th>
+    <th>Название характеристики</th>
+    <th>Значение "от;до"</th>
+    <th>Значение "1:много"</th>
+    <th>Ед. изм.</th>
+  </tr>
+  <tr>
+    {% if groupp_name and chars_dict%}
+      <td rowspan="{{chars_dict|length + 1}}">{{groupp_name[0].name}}</td>
+
+      {% for chars in chars_dict %}
+        <td>{{chars.char_name.name}}</td>
+        <td>{{chars.chars_val_from_to}}</td>
+        <td>{{chars.chars_val}}</td>
+        <td>{{chars.measure_name.name}}</td>
+      </tr>
+      {% endfor %}
+    {% elif groupp_name %}
+    <td rowspan =2>{{groupp_name[0].name}}</td>
+
+
+    <tr>
+      <form method="post">
+        <td>
+          <input type="hidden" name="group_id" value={{groupp_name[0].id}}>
+          <input type="text" maxlength="255" name="char_id" placeholder="Название характеристики"></td>
+        <td><input type="text" maxlength="255" name="chars_val_from_to" placeholder="Значение от;до"></td>
+        <td><input type="text" maxlength="255" name="chars_val" placeholder="Значение"></td>
+        <td><input type="text" maxlength="255" name="measure_id" placeholder="Ед. изм."></td>
+        <td><input type="submit" name="add_chars" value="Добавить характеристики"></td>
+      </form>
+    </tr>
+    {% endif %}
+</table>
+
+{% endblock %}
