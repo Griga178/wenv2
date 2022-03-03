@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<p>На этой странице выводятся все модели, имеющиеся в БД</p>
+
+<table border="1" cellpadding="4" cellspacing="0">
+  <caption>Информация по предметам</caption>
+  <tr>
+    <th>Название предмета</th><th>Название модели</th><th>Средняя цена (Не работает)</th><th colspan = 2>Функции (Не работает)</th>
+  </tr>
+  {% for sub in main_query %}
+  <tr>
+    <td {% if sub.objects|length == 0 %} rowspan="1" {% else %} rowspan="{{sub.objects|length}}" {% endif %}> {{sub.name}}
+      (<small><a title = 'Сравнить характеристики всех моделей' href="{{url_for('model_compare_func', subject_ids = sub.id )}}">Xарактеристики</a></small>,
+    <small><a title = 'ТУТ ПОДСКАЗКА' href="#">Ссылки</a></small>,
+    <small><a title = 'ТУТ ПОДСКАЗКА' href="#">Группы</a></small>)
+    </td>
+    {% if sub.objects|length == 0 %}
+      <td> - </td>
+      <td> - </td>
+      <td> - </td>
+      <td> - </td>
+    {% else %}
+      {% for model in sub.objects %}
+        <td><a title = 'Характеристики этой модели' href="{{url_for('model_information', model_id = model.id )}}">{{model.name}}</a></td>
+        <td>-</td>
+        <td>Удалить </td>
+        <td>Изменить</td>
+        </tr>
+      {% endfor %}
+    {% endif %}
+
+
+  {% endfor %}
+</table>
+
+{% endblock %}

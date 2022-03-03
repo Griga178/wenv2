@@ -28,7 +28,7 @@ class Prototype(Base):
     id = Column(Integer, primary_key = True)
     http_link = Column(String(255), nullable = False)
     object_id = Column(Integer, ForeignKey('objects.id'))
-    object_name = relationship('Object') #, lazy = 'dynamic'
+    object_name = relationship('Object', back_populates = 'prototypes') #, lazy = 'dynamic'
 
 class Object(Base):
     """Тут хранятся известные модели товаров
@@ -38,7 +38,7 @@ class Object(Base):
     name = Column(String(255), nullable = False)
     subject_id = Column(Integer, ForeignKey('subjects.id'))
     subject_name = relationship('Subject')
-    prototypes = relationship("Prototype", backref='objects')
+    prototypes = relationship("Prototype", backref='objects') # back_populates = 'objects' )
     producer_link = Column(String(255))
 
 class Subject(Base):
@@ -46,7 +46,7 @@ class Subject(Base):
     __tablename__ = 'subjects'
     id = Column(Integer, primary_key=True)
     name = Column(String(255), nullable = False)
-    #objects = relationship("Object", backref='subjects')
+    objects = relationship("Object", backref='subjects')
 
 class Measure(Base):
     """ Единицы измерения """

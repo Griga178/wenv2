@@ -13,6 +13,20 @@ def index():
 
     return render_template('index.html')
 # работа с таблицей прототипами
+
+
+@app.route('/information')
+def subject_iformation():
+    main_query = session.query(Subject).order_by(Subject.name).all()
+
+    return render_template('subject_information.html', main_query = main_query)
+
+@app.route('/model_informations/<int:model_id>')
+def model_information(model_id):
+    main_query = session.query(Model_char_measure_val).filter_by(model_id = model_id).all()
+    linqs_query = session.query(Prototype).filter_by(object_id = model_id).all()
+    return render_template('models_info.html', main_query = main_query, linqs_query = linqs_query)
+
 @app.route('/prototypes', methods = ['GET', 'POST'])
 def proto_table():
     if request.method == 'POST':
@@ -89,10 +103,7 @@ def subj_table():
     data_list = session.query(Subject).all()
     return render_template('subjects.html', data_list = data_list)
 
-@app.route('/connections')
-def sub_obj_prot():
-    data_list = session.query(Prototype).all()
-    return render_template('sub_obj_prot.html', data_list = data_list)
+
 
 @app.route('/measures', methods = ['GET', 'POST'])
 def measure_table():
@@ -131,27 +142,6 @@ def mcmv_table():
     return render_template('mcmv.html', data_list = data_list,
     model_dict = model_dict, chars_dict = chars_dict, measure_dict = measure_dict)
 
-@app.route('/mcmv_ver2/<int:step><int:model_id>', methods = ['GET', 'POST'])
-def mcmv_table_ver2(step, model_id):
-    if step == 1:
-
-        if request.method == 'POST':
-            data2 = request.form['model_id']
-            data3 = request.form['char_id']
-            data4 = request.form['mes_id']
-            data1 = request.form['value']
-            data = Model_char_measure_val(model_id = data2, char_id = data3, measure_id = data4, chars_val = data1)
-            session.add(data)
-            session.commit()
-        data_list = session.query(Model_char_measure_val).all()
-        model_dict = session.query(Object).all()
-        chars_dict = session.query(Characteristic).all()
-        measure_dict = session.query(Measure).all()
-        return render_template('mcmv_ver2.html', data_list = data_list,
-        model_dict = model_dict, chars_dict = chars_dict, measure_dict = measure_dict)
-    elif step == 2:
-        mo_chars_dict = session.query(Model_char_measure_val).filter_by(model_id = model_id).all()
-        return render_template('mcmv_ver2.html', mo_chars_dict = mo_chars_dict)
 
 def func_for_table(subject_id):
     """ Создаем set, в котором будут:
