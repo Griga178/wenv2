@@ -2,14 +2,14 @@
 {% block content %}
 
 
-<br>
+
+
 {% if main_query|length %}
+  <h3> {{main_query[0].model_name.name}} </h3>
   <table border = "1">
-    <caption> {{main_query[0].model_name.name}} </caption>
     <tr>
       <th>Название характеристики</th><th>Значение</th><th>Единица измерения</th>
     </tr>
-
     {% for char in main_query %}
       <tr>
         <td>{{char.char_name.name}}</td>
@@ -17,13 +17,22 @@
         <td>{{char.measure_name.name}}</td>
       </tr>
     {% endfor %}
-{% else %}
-<p>Нет характеристик</p>
-{% endif %}
   </table>
-<br>
-{% for links in linqs_query %}
-  <li><a href="{{ links.http_link }}" target="_blank">{{ links.http_link[:35] }}...</a></li>
-{% endfor %}
+{% else %}
+  <p>Нет характеристик - <a href="#"> Добавить</a></p>
+
+{% endif %}
+
+{% if linqs_query|length %}
+  {% if not main_query|length %}
+    <h3> {{linqs_query[0].object_name.name}} </h3>
+  {% endif %}
+  <h4>Ссылки:</h4>
+  {% for links in linqs_query %}
+    <li><a href="{{ links.http_link }}" target="_blank">{{ links.http_link[:35] }}...</a></li>
+    {% endfor %}
+  {% else %}
+  <p>Нет ссылок - <a href="#"> Добавить</a></p>
+{% endif %}
 
 {% endblock %}

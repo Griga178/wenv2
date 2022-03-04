@@ -9,8 +9,9 @@
   </tr>
   {% for sub in main_query %}
   <tr>
-    <td {% if sub.objects|length == 0 %} rowspan="1" {% else %} rowspan="{{sub.objects|length}}" {% endif %}> {{sub.name}}
-      (<small><a title = 'Сравнить характеристики всех моделей' href="{{url_for('model_compare_func', subject_ids = sub.id )}}">Xарактеристики</a></small>,
+    <td {% if sub.objects|length == 0 %} rowspan="1" {% else %} rowspan="{{sub.objects|length}}" {% endif %}> <b><big>{{sub.name}} </big></b>
+    <br>
+    (<small><a title = 'Сравнить характеристики всех моделей' href="{{url_for('model_compare_func', subject_ids = sub.id )}}">Xарактеристики</a></small>,
     <small><a title = 'ТУТ ПОДСКАЗКА' href="#">Ссылки</a></small>,
     <small><a title = 'ТУТ ПОДСКАЗКА' href="#">Группы</a></small>)
     </td>
