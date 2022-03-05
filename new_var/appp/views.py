@@ -27,6 +27,11 @@ def model_information(model_id):
     linqs_query = session.query(Prototype).filter_by(object_id = model_id).all()
     return render_template('models_info.html', main_query = main_query, linqs_query = linqs_query)
 
+@app.route('/model_set/<int:model_id>')
+def model_setting(model_id):
+    main_query = session.query(Object).filter_by(id = model_id).all()
+    return render_template('model_setting.html', main_query = main_query)
+
 @app.route('/prototypes', methods = ['GET', 'POST'])
 def proto_table():
     if request.method == 'POST':

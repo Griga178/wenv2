@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% if main_query %}
+<p>Название модели: <b>{{ main_query[0].name }}</b></p>
+
+<p>Существующие характеристики:</p>
+{% for characteristic in main_query[0].model_chars%}
+<li>{{characteristic.char_name.name}}:{{characteristic.chars_val}} {{characteristic.measure_name.name}}</li>
+{% endfor %}
+
+{% if main_query[0].prototypes %}
+<p>Ссылки:</p>
+{% for link in main_query[0].prototypes %}
+<li><a href="{{link.http_link}}" target="_blank">{{link.http_link}}</a></li>
+{% endfor %}
+{% else %}
+<p>Ссылок нет</p>
+{% endif %}
+
+{% else %}
+<p>Модели с таки "id" не существует</p>
+{% endif %}
+
+{% endblock %}
