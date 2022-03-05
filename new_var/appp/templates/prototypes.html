@@ -16,7 +16,7 @@
   {% for item in data_list %}
   <tr>
     <td width = 1 align="center">{{ item.id }}</td>
-    <td width = 1>{{ item.object_name.name }}</td>
+    <td width = 1>{{ item.objects.name }}</td>
     <td><a href="{{ item.http_link }}" target="_blank">{{ item.http_link[:35] }}...</a></td>
     <td align="center" width = 1><a href="{{url_for('proto_del', item_id = item.id, table_name = 'Prototype')}}">Удалить</a>
       <a href="{{url_for('proto_change', item_id = item.id, table_name = 'Prototype')}}">Изменить</a></td>

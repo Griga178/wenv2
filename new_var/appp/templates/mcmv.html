@@ -17,8 +17,8 @@
   </tr>
   {% for item in data_list %}
   <tr>
-    <td>{{ item.model_name.name}}</td>
-    <td>{{ item.char_name.name}}</td>
+    <td>{{item.objects.name}}</td>
+    <td>{{item.char_name.name}}</td>
     <td>{{item.chars_val}}</td>
     <td>{{item.measure_name.name}}</td>
     <td><a href= "{{url_for('proto_del', item_id = item.some_id, table_name = 'Mchmeva')}}">Удалить</a></td>

@@ -165,11 +165,12 @@ def func_for_table(subject_id):
 @app.route('/model_compare/<int:subject_ids>', methods = ['GET', 'POST'])
 def model_compare_func(subject_ids = 4):
     some_table = func_for_table(subject_ids)
+    main_query = session.query(Subject).filter_by(id = subject_ids).all()
     if len(some_table[0]) == 0:
         #url_for('model_compare_func', subject_ids = 4)
         return render_template('subjects.html')
     else:
-        return render_template('model_compare.html', data = some_table[0], chars_set = some_table[1])
+        return render_template('model_compare.html', data = some_table[0], chars_set = some_table[1], main_query = main_query)
 
 @app.route('/sortded')
 def subject_groups():

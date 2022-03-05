@@ -23,7 +23,7 @@
   </tr>
 
   <tr>
-    <td rowspan="{{chars_set|length}}"><b>{{data[0].subject_name.name}}</b></td>
+    <td rowspan="{{chars_set|length}}"><b>{{data[0].subjects.name}}</b></td>
     {% set counter = namespace(found = 0) %}
     {% for characteristic in chars_set %}
       <td><b>{{characteristic}}</b></td>
@@ -49,4 +49,9 @@
 
 
 </table>
+
+{{main_query[0].name}}
+<p>{{main_query[0].objects|length}} шт</p>
+<p>{{main_query[0].objects[0].name}}</p>
+<p>{{main_query[0].objects[1].name}}</p>
 {% endblock %}

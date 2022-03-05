@@ -16,7 +16,7 @@
   {% for item in data_list %}
   <tr>
     <td>{{ item.id }}</td>
-    <td>{{ item.subject_name.name }}</td>
+    <td>{{ item.subjects.name }}</td>
     <td>{{ item.name}}</td>
     <td>{% if item.producer_link %}<a href="{{item.producer_link}}" target="_blank" >Ссылка на производителя</a><br>{% endif %}
      Характеристики модели</td>
