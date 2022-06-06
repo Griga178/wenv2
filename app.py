@@ -38,9 +38,10 @@ def new():
 # Главная страница
 @app.route('/')
 def index():
-    conn = get_db_connection('database.db')
-    posts = conn.execute('SELECT * FROM posts').fetchall()
-    conn.close()
+    # conn = get_db_connection('database.db')
+    # posts = conn.execute('SELECT * FROM posts').fetchall()
+    posts = [{"id": 1, "title": "title"}]
+    # conn.close()
     return render_template('index.html', posts=posts)
 
 def all_post(table_name):
